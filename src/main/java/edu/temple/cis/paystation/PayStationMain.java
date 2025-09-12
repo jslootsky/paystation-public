@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class PayStationMain {
     private static PayStation ps;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalCoinException {
         Scanner userInput = new Scanner(System.in);
         ps = new PayStationImpl();
 
@@ -37,8 +37,14 @@ public class PayStationMain {
     }
 
     //functions that carry out menu functions 
-    private static void depositCoins(){
-
+    private static void depositCoins() throws IllegalCoinException{
+        System.out.println("Enter -1 to exit");
+        Scanner input = new Scanner(System.in);
+        int coinInput = input.nextInt();
+        while(coinInput != -1){
+            ps.addPayment(coinInput);
+            coinInput = input.nextInt();
+        }
     }
 
 }
