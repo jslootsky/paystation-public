@@ -1,4 +1,4 @@
-package edu.temple;
+package edu.temple.cis.paystation;
 import java.util.Scanner;
 
 public class PayStationMain {
@@ -13,5 +13,7 @@ public class PayStationMain {
 
         int input = userInput.nextInt();
         System.out.println("You entered: " + input);
+
+        userInput.close();
     }
 }
