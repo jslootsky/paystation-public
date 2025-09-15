@@ -42,9 +42,16 @@ public class PayStationMain {
         Scanner input = new Scanner(System.in);
         int coinInput = input.nextInt();
         while(coinInput != -1){
-            ps.addPayment(coinInput);
+            try{
+                ps.addPayment(coinInput);
+            }catch (Exception e){
+                System.out.println(e.toString());
+            }
             coinInput = input.nextInt();
+            
+            System.out.println("Enter -1 to exit");
         }
+        
     }
 
 }

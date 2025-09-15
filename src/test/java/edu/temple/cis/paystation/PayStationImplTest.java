@@ -286,4 +286,10 @@ public class PayStationImplTest {
         ps.buy();
         assertTrue("Coin map should be empty after buy", ps.cancel().isEmpty());
     }
+
+    @Test
+    public void returnsMap() throws IllegalCoinException{
+        ps.addPayment(25);
+        
+    }
 }

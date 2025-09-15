@@ -89,4 +89,9 @@ public class PayStationImpl implements PayStation {
         totalMoney = 0;
         return temp;
     }
+
+    @Override
+    public Map<Integer, Integer> returnMap(){
+        return coinMap;
+    }
 }
