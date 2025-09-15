@@ -56,7 +56,7 @@ public class PayStationMain {
         }
 
         //summary
-                Map<Integer, Integer> coins = ps.returnMap();
+        Map<Integer, Integer> coins = ps.returnMap();
         System.out.println("Coins inserted: 5:" + coins.getOrDefault(5, 0) +
                 ", 10:" + coins.getOrDefault(10, 0) +
                 ", 25:" + coins.getOrDefault(25, 0));
