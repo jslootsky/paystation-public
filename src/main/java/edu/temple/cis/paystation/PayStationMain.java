@@ -4,9 +4,10 @@ import java.util.Scanner;
 
 public class PayStationMain {
     private static PayStation ps;
+    private static Scanner userInput;
 
     public static void main(String[] args) throws IllegalCoinException {
-        Scanner userInput = new Scanner(System.in);
+        userInput = new Scanner(System.in);
         ps = new PayStationImpl();
 
         boolean running = true;
@@ -42,9 +43,8 @@ public class PayStationMain {
     //functions that carry out menu functions 
     private static void depositCoins() throws IllegalCoinException{
         System.out.println("You have selected: Deposit coins. Enter -1 to exit");
-        Scanner input = new Scanner(System.in);
 
-        int coinInput = input.nextInt();
+        int coinInput = userInput.nextInt();
         while(coinInput != -1){
             try{
                 ps.addPayment(coinInput);
@@ -52,7 +52,7 @@ public class PayStationMain {
             }catch (Exception e){
                 System.out.println(e.toString());
             }
-            coinInput = input.nextInt();
+            coinInput = userInput.nextInt();
         }
 
         //summary
@@ -61,7 +61,6 @@ public class PayStationMain {
                 ", 10:" + coins.getOrDefault(10, 0) +
                 ", 25:" + coins.getOrDefault(25, 0));
 
-        input.close();
     }
 
 }
