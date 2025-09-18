@@ -68,4 +68,9 @@ public interface PayStation {
      * call.
      */
     public int empty();
+
+    /*
+     * Returns a copy of the coin map
+     */
+    public Map<Integer, Integer> returnMap();
 }

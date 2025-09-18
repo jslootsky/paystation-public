@@ -286,4 +286,74 @@ public class PayStationImplTest {
         ps.buy();
         assertTrue("Coin map should be empty after buy", ps.cancel().isEmpty());
     }
+
+    /** returnMap should never return null, even with no coins inserted. */
+    @Test
+    public void returnMapNotNullWhenEmpty() {
+        Map<Integer, Integer> m = ps.returnMap();
+        assertNotNull("returnMap should not return null", m);
+        assertTrue("Map should start empty", m.isEmpty());
+    }
+
+    /** returnMap should reflect the exact counts of coins inserted so far. */
+    @Test
+    public void returnMapReflectsInsertedCoins() throws IllegalCoinException {
+        ps.addPayment(10);
+        ps.addPayment(10);
+        ps.addPayment(5);
+
+        Map<Integer, Integer> m = ps.returnMap();
+        assertEquals("Should have two dimes", Integer.valueOf(2), m.get(10));
+        assertEquals("Should have one nickel", Integer.valueOf(1), m.get(5));
+        assertFalse("Should not contain quarters key", m.containsKey(25));
+    }
+
+    /** returnMap should update as more coins are added (same session). */
+    @Test
+    public void returnMapUpdatesAsCoinsAreAdded() throws IllegalCoinException {
+        ps.addPayment(25);
+        Map<Integer, Integer> m1 = ps.returnMap();
+        assertEquals("One quarter after first insert", Integer.valueOf(1), m1.get(25));
+
+        ps.addPayment(25);
+        ps.addPayment(5);
+        Map<Integer, Integer> m2 = ps.returnMap();
+        assertEquals("Two quarters total", Integer.valueOf(2), m2.get(25));
+        assertEquals("One nickel total", Integer.valueOf(1), m2.get(5));
+    }
+
+    /** returnMap should be cleared after buy(). */
+    @Test
+    public void returnMapClearedAfterBuy() throws IllegalCoinException {
+        ps.addPayment(25);
+        ps.addPayment(10);
+        ps.buy(); // completes transaction and resets internal state
+
+        Map<Integer, Integer> m = ps.returnMap();
+        assertTrue("Map should be empty after buy", m.isEmpty());
+    }
+
+    /** returnMap should be cleared after cancel(). */
+    @Test
+    public void returnMapClearedAfterCancel() throws IllegalCoinException {
+        ps.addPayment(10);
+        ps.addPayment(5);
+        ps.cancel(); // cancels and resets internal state
+
+        Map<Integer, Integer> m = ps.returnMap();
+        assertTrue("Map should be empty after cancel", m.isEmpty());
+    }
+
+    /**
+     * returnMap should not throw on denominations not present;
+     * getOrDefault behavior is tested indirectly by absence of keys.
+     */
+    @Test
+    public void returnMapDoesNotIncludeAbsentDenomination() throws IllegalCoinException {
+        ps.addPayment(5);
+        Map<Integer, Integer> m = ps.returnMap();
+        assertFalse("Map should not contain dimes if none inserted", m.containsKey(10));
+        assertFalse("Map should not contain quarters if none inserted", m.containsKey(25));
+    }
+
 }
