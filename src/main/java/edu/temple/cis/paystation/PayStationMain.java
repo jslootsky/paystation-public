@@ -28,7 +28,6 @@ public class PayStationMain {
         userInput.close();
     }
 
-        
     /// function that prints the menu
     private static void printMenu(){
         System.out.println("Hello! Welcome to the PayStation. Please select your choice:");
