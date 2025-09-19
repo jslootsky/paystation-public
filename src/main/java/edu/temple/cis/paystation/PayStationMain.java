@@ -20,6 +20,9 @@ public class PayStationMain {
                 case(1):
                     depositCoins();
                     break; //prevents falling straight to case 4 after case 1 is executed
+                case(2):
+                    System.out.println("Time bought: " + ps.readDisplay() + " minutes");
+                    break;
                 case(4):
                 running = false;
             }
