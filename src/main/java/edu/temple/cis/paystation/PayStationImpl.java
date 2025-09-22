@@ -62,6 +62,9 @@ public class PayStationImpl implements PayStation {
 
     @Override
     public Receipt buy() {
+        if(insertedSoFar <= 0){
+            throw new IllegalStateException("No coins inserted");
+        }
         Receipt r = new ReceiptImpl(timeBought);
         totalMoney += insertedSoFar;
         reset();
