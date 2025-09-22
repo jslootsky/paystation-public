@@ -24,7 +24,7 @@ public class PayStationMain {
                     System.out.println("Time bought: " + ps.readDisplay() + " minutes");
                     break;
                 case(4):
-                running = false;
+                    running = false;
             }
         }
 
