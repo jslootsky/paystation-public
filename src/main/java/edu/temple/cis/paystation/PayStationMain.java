@@ -27,7 +27,9 @@ public class PayStationMain {
                     buyTicket();
                     break;
                 case(4):
-                    running = false;
+                     Map<Integer, Integer> c = ps.cancel();
+                     System.out.println("Coins cancelled: "+ c);
+                    break;
             }
         }
 
