@@ -16,13 +16,13 @@ public class PayStationMain {
         while(running){
             printMenu();
 
-            int input = userInput.nextInt();
+            int input = readInt("Select: ");
             switch (input){
                 case(1):
                     depositCoins();
                     break; //prevents falling straight to case 4 after case 1 is executed
                 case(2):
-                    System.out.println("Time bought: " + ps.readDisplay() + " minutes");
+                    System.out.println("\nTime bought: " + ps.readDisplay() + " minutes\n");
                     break;
                 case(3)://returns a receipt
                     buyTicket();
@@ -30,6 +30,14 @@ public class PayStationMain {
                 case(4):
                     doCancel();
                     break;
+                case(0): //admin interface
+                    adminMenu();
+                    break;
+                case(-1):
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid option.\n");
             }
         }
 
@@ -40,11 +48,37 @@ public class PayStationMain {
     private static void printMenu(){
         System.out.println("Hello! Welcome to the PayStation. Please select your choice:");
         System.out.println("Menu:");
-        System.out.println("1. Deposit coins");
-        System.out.println("2. Display");
-        System.out.println("3. Buy Ticket");
-        System.out.println("4. Cancel");
-        System.out.println("0. Admin interface");
+        System.out.println(" 1. Deposit coins");
+        System.out.println(" 2. Display");
+        System.out.println(" 3. Buy Ticket");
+        System.out.println(" 4. Cancel");
+        System.out.println(" 0. Admin interface");
+        System.out.println("-1. Exit");
+    }
+
+    private static void adminMenu() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n== Admin Menu ==");
+            System.out.println("1. Empty");
+            System.out.println("2. Change Rate Strategy");
+            System.out.println("0. Back");
+            int c = readInt("Select: ");
+            switch (c) {
+                case 1:
+                    
+                    break;
+                case 2:
+
+                    break;
+                case 0:
+                    back = true;
+                    break;
+                default:
+                    System.out.println("Invalid option.\n");
+            }
+        }
+        System.out.println();
     }
 
     //functions that carry out menu functions 
@@ -66,8 +100,8 @@ public class PayStationMain {
         Map<Integer, Integer> coins = ps.returnMap();
         System.out.println("Coins inserted: 5:" + coins.getOrDefault(5, 0) +
                 ", 10:" + coins.getOrDefault(10, 0) +
-                ", 25:" + coins.getOrDefault(25, 0));
-
+                ", 25:" + coins.getOrDefault(25, 0) +
+                "\n");
     }
     
     private static void buyTicket() {
@@ -95,6 +129,19 @@ public class PayStationMain {
 
     private static Map<Integer, Integer> safeCoinMap(Map<Integer, Integer> m) {
         return (m == null) ? new HashMap<>() : m;
+    }
+
+    private static int readInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            if (userInput.hasNextInt()) {
+                int v = userInput.nextInt();
+                return v;
+            } else {
+                System.out.println("Please enter a number.");
+                userInput.next(); // discard bad token
+            }
+        }
     }
 
 }
