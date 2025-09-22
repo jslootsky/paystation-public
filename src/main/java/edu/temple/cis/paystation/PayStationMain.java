@@ -23,8 +23,11 @@ public class PayStationMain {
                 case(2):
                     System.out.println("Time bought: " + ps.readDisplay() + " minutes");
                     break;
+                case(3)://returns a receipt
+                    buyTicket();
+                    break;
                 case(4):
-                running = false;
+                    running = false;
             }
         }
 
@@ -63,6 +66,19 @@ public class PayStationMain {
                 ", 10:" + coins.getOrDefault(10, 0) +
                 ", 25:" + coins.getOrDefault(25, 0));
 
+    }
+    
+    private static void buyTicket() {
+        try {
+            Receipt r = ps.buy();
+            int minutes = r.value();
+            int h = minutes / 60, m = minutes % 60;
+            System.out.println("\n=== Receipt ===");
+            System.out.printf("Time: %d min (%dh %02dm)%n", minutes, h, m);
+            System.out.println("===============\n");
+        } catch (IllegalStateException e) {
+            System.out.println("Nothing to buy. Insert coins first.\n");
+        }
     }
 
 }

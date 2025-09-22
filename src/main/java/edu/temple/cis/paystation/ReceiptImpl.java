@@ -17,11 +17,22 @@ public class ReceiptImpl implements Receipt {
     private int value;
 
     public ReceiptImpl(int value) {
-        this.value = value;
+        if (value < 0) {
+            throw new IllegalArgumentException("Receipt minutes cannot be negative");
+        }
+        this.value = value;    
     }
 
     @Override
     public int value() {
         return value;
+    }
+
+    @Override
+    public String toString() {
+        // Optional: format for your "printed ticket"
+        int hours = value / 60;
+        int minutes = value % 60;
+        return String.format("PARKING TICKET%nTime: %d min (%dh %02dm)%n", value, hours, minutes);
     }
 }
