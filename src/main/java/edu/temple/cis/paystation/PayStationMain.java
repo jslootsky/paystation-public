@@ -1,4 +1,5 @@
 package edu.temple.cis.paystation;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -27,7 +28,8 @@ public class PayStationMain {
                     buyTicket();
                     break;
                 case(4):
-                    running = false;
+                    doCancel();
+                    break;
             }
         }
 
@@ -79,6 +81,20 @@ public class PayStationMain {
         } catch (IllegalStateException e) {
             System.out.println("Nothing to buy. Insert coins first.\n");
         }
+    }
+
+    private static void doCancel() {
+        Map<Integer, Integer> returned = ps.cancel();
+        Map<Integer, Integer> coins = safeCoinMap(returned);
+        System.out.println("\nTransaction canceled. Returned coins:");
+        System.out.printf("5c: %d, 10c: %d, 25c: %d%n%n",
+                coins.getOrDefault(5, 0),
+                coins.getOrDefault(10, 0),
+                coins.getOrDefault(25, 0));
+    }
+
+    private static Map<Integer, Integer> safeCoinMap(Map<Integer, Integer> m) {
+        return (m == null) ? new HashMap<>() : m;
     }
 
 }
