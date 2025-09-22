@@ -14,7 +14,14 @@ public class PayStationMain {
         boolean running = true;
         
         while(running){
-            printMenu();
+            System.out.println("Hello! Welcome to the PayStation. Please select your choice:");
+            System.out.println("Menu:");
+            System.out.println(" 1. Deposit coins");
+            System.out.println(" 2. Display");
+            System.out.println(" 3. Buy Ticket");
+            System.out.println(" 4. Cancel");
+            System.out.println(" 0. Admin interface");
+            System.out.println("-1. Exit");
 
             int input = readInt("Select: ");
             switch (input){
@@ -42,18 +49,6 @@ public class PayStationMain {
         }
 
         userInput.close();
-    }
-
-    /// function that prints the menu
-    private static void printMenu(){
-        System.out.println("Hello! Welcome to the PayStation. Please select your choice:");
-        System.out.println("Menu:");
-        System.out.println(" 1. Deposit coins");
-        System.out.println(" 2. Display");
-        System.out.println(" 3. Buy Ticket");
-        System.out.println(" 4. Cancel");
-        System.out.println(" 0. Admin interface");
-        System.out.println("-1. Exit");
     }
 
     private static void adminMenu() {
