@@ -30,7 +30,7 @@ public class PayStationImpl implements PayStation{
     public PayStationImpl(){
         insertedSoFar = timeBought = totalMoney = 0;
         coinMap = new HashMap<>();
-        rateStrategy = new Linear1();
+        rateStrategy = new Linear1(); //defaults to linear1
     }
 
     public void setRateStragey(RateStrategy rs){
@@ -64,7 +64,7 @@ public class PayStationImpl implements PayStation{
         coinMap.put(coinValue, coinMap.getOrDefault(coinValue, 0) + 1);
 
         insertedSoFar += coinValue;
-        timeBought = insertedSoFar / 5 * 2;
+        timeBought = rateStrategy.calculateTime(insertedSoFar);//calculates time based on the rate strategy
     }
 
     @Override
