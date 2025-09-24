@@ -39,6 +39,7 @@ public class PayStationMain {
                                 break;
                             case(2):
                                 System.out.println("\nTest:RATE SELECTED\n");
+                                changeRateStrategyAdmin();
                                 break;
                             case(0):
                                 adminRunning = false;
@@ -54,6 +55,49 @@ public class PayStationMain {
         userInput.close();
     }
 
+    private static void changeRateStrategyAdmin() {
+        if (!(ps instanceof PayStationImpl)) {
+            System.out.println("This PayStation does not support changing strategies at runtime.\n");
+            return;
+        }
+
+        PayStationImpl impl = (PayStationImpl) ps;
+
+        System.out.println("Select client (rate strategy):");
+        System.out.println("1. Alphatown (Linear1: 5c → 2 min)");
+        System.out.println("2. Betatown (Progressive)");
+        System.out.println("3. Gammatown (Alternating1: weekdays=Progressive, weekends=Linear1)");
+        System.out.println("4. Deltatown (Linear2: 5c → 1 min)");
+        System.out.println("5. Omegatown (Alternating2: weekdays=Linear1, weekends=Free)");
+        int sel = userInput.nextInt();
+
+        switch (sel) {
+            case 1:
+                impl.setRateStrategy(new Linear1());
+                System.out.println("Set to Alphatown (Linear1).\n");
+                break;
+            case 2:
+                impl.setRateStrategy(new Progressive());
+                System.out.println("Set to Betatown (Progressive).\n");
+                break;
+            case 3:
+                impl.setRateStrategy(new Alternating1());
+                System.out.println("Set to Gammatown (Alternating1: weekdays Progressive, weekends Linear1).\n");
+                break;
+            case 4:
+                impl.setRateStrategy(new Linear2());
+                System.out.println("Set to Deltatown (Linear2).\n");
+                break;
+            case 5:
+                impl.setRateStrategy(new Alternating2()); // update Alternating2 similarly
+                System.out.println("Set to Omegatown (Alternating2: weekdays Linear1, weekends Free).\n");
+                break;
+            default:
+                System.out.println("Invalid selection.\n");
+        }
+    }
+
+
     /// function that prints the menu
     private static void printMenu(){
         System.out.println("Hello! Welcome to the PayStation. Please select your choice:");
@@ -66,7 +110,7 @@ public class PayStationMain {
         System.out.println("0. Exit");
     }
     private static void adminMenu(){
-        System.out.println("Entered admin menu, please select your choice.");
+        System.out.println("\nEntered admin menu, please select your choice.");
         System.out.println("Admin Menu:");
         System.out.println("1. Empty");
         System.out.println("2. Change Rate");
@@ -90,9 +134,10 @@ public class PayStationMain {
 
         //summary
         Map<Integer, Integer> coins = ps.returnMap();
-        System.out.println("Coins inserted: 5:" + coins.getOrDefault(5, 0) +
+        System.out.println("\nCoins inserted: 5:" + coins.getOrDefault(5, 0) +
                 ", 10:" + coins.getOrDefault(10, 0) +
-                ", 25:" + coins.getOrDefault(25, 0));
+                ", 25:" + coins.getOrDefault(25, 0) +
+                "\n");
 
     }
     
@@ -125,12 +170,13 @@ public class PayStationMain {
 
     private static void coinEmptied(){
         try {
-            System.out.println("Coins have been emptied.");
             //Coins are "emptied", and does work according to the code.
             //Empty does not work as one thinks, where the coins are emptied out of the payStation
             //Cancel would do that
             //Remove explanation later.
-            ps.empty();
+            
+            int cents = ps.empty();
+            System.out.println("Machine emptied. Total collected: " + cents + " cents.\n");
         } catch (IllegalStateException e) {
         }
     }
