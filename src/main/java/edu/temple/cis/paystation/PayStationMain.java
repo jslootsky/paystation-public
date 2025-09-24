@@ -20,7 +20,7 @@ public class PayStationMain {
                     depositCoins();
                     break; //prevents falling straight to case 4 after case 1 is executed
                 case(2):
-                    System.out.println("Time bought: " + ps.readDisplay() + " minutes");
+                    System.out.println("\nTime bought: " + ps.readDisplay() + " minutes\n");
                     break;
                 case(3)://returns a receipt
                     buyTicket();
@@ -38,7 +38,7 @@ public class PayStationMain {
                                 coinEmptied();
                                 break;
                             case(2):
-                                System.out.println("Test:RATE SELECTED");
+                                System.out.println("\nTest:RATE SELECTED\n");
                                 break;
                             case(0):
                                 adminRunning = false;
