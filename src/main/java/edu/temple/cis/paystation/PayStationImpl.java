@@ -38,6 +38,10 @@ public class PayStationImpl implements PayStation{
         this.rateStrategy = rs;
         this.timeBought = rateStrategy.calculateTime(insertedSoFar);
     }
+
+    public RateStrategy getRateStrategy(){
+        return rateStrategy;
+    }
     
     @Override
     public void addPayment(int coinValue)
