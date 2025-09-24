@@ -2,5 +2,5 @@ package edu.temple.cis.paystation;
 
 public interface RateStrategy {
     
-    public double calculateStrategy();
+    int calculateTime (int cents);
 }
