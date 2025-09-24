@@ -26,14 +26,18 @@ public class PayStationImpl implements PayStation{
     private Map<Integer, Integer> coinMap;
     private RateStrategy rateStrategy;
 
+    /** Default: Alphatown (Linear1) */
+    public PayStationImpl() {
+        this(new Linear1());
+    }
     // Constructor initializes instance variables
-    public PayStationImpl(){
+    public PayStationImpl(RateStrategy strategy){
         insertedSoFar = timeBought = totalMoney = 0;
         coinMap = new HashMap<>();
-        rateStrategy = new Linear1(); //defaults to linear1
+        setRateStrategy(strategy);    //defaults to linear1
     }
 
-    public void setRateStragey(RateStrategy rs){
+    public void setRateStrategy(RateStrategy rs){
         if(rs == null) throw new IllegalArgumentException("RateStrategy cannot be null");
         this.rateStrategy = rs;
         this.timeBought = rateStrategy.calculateTime(insertedSoFar);
