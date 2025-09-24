@@ -12,17 +12,15 @@ public class PayStationMain {
         ps = new PayStationImpl();
 
         boolean running = true;
-        
         while(running){
             printMenu();
-
             int input = userInput.nextInt();
             switch (input){
                 case(1):
                     depositCoins();
                     break; //prevents falling straight to case 4 after case 1 is executed
                 case(2):
-                    System.out.println("Time bought: " + ps.readDisplay() + " minutes");
+                    System.out.println("\nTime bought: " + ps.readDisplay() + " minutes\n");
                     break;
                 case(3)://returns a receipt
                     buyTicket();
@@ -30,6 +28,26 @@ public class PayStationMain {
                 case(4):
                     doCancel();
                     break;
+                case(5):
+                boolean adminRunning = true;
+                    while (adminRunning){
+                        adminMenu();
+                        int adminChoice = userInput.nextInt();
+                        switch(adminChoice){
+                            case(1):
+                                coinEmptied();
+                                break;
+                            case(2):
+                                System.out.println("\nTest:RATE SELECTED\n");
+                                break;
+                            case(0):
+                                adminRunning = false;
+                                break;
+                        }
+                    }
+                    break;
+                case(0):
+                running = false;
             }
         }
 
@@ -44,7 +62,15 @@ public class PayStationMain {
         System.out.println("2. Display");
         System.out.println("3. Buy Ticket");
         System.out.println("4. Cancel");
-        System.out.println("0. Admin interface");
+        System.out.println("5. Admin interface");
+        System.out.println("0. Exit");
+    }
+    private static void adminMenu(){
+        System.out.println("Entered admin menu, please select your choice.");
+        System.out.println("Admin Menu:");
+        System.out.println("1. Empty");
+        System.out.println("2. Change Rate");
+        System.out.println("0. Exit");
     }
 
     //functions that carry out menu functions 
@@ -95,6 +121,18 @@ public class PayStationMain {
 
     private static Map<Integer, Integer> safeCoinMap(Map<Integer, Integer> m) {
         return (m == null) ? new HashMap<>() : m;
+    }
+
+    private static void coinEmptied(){
+        try {
+            System.out.println("Coins have been emptied.");
+            //Coins are "emptied", and does work according to the code.
+            //Empty does not work as one thinks, where the coins are emptied out of the payStation
+            //Cancel would do that
+            //Remove explanation later.
+            ps.empty();
+        } catch (IllegalStateException e) {
+        }
     }
 
 }
