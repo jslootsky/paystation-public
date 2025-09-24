@@ -81,7 +81,7 @@ public class PayStationMain {
                 System.out.println("Set to Betatown (Progressive).\n");
                 break;
             case 3:
-                impl.setRateStrategy(new Alternating1()); // ✅ no args needed now
+                impl.setRateStrategy(new Alternating1());
                 System.out.println("Set to Gammatown (Alternating1: weekdays Progressive, weekends Linear1).\n");
                 break;
             case 4:
@@ -89,8 +89,8 @@ public class PayStationMain {
                 System.out.println("Set to Deltatown (Linear2).\n");
                 break;
             case 5:
-                // impl.setRateStrategy(new Alternating2()); // update Alternating2 similarly
-                // System.out.println("Set to Omegatown (Alternating2: weekdays Linear1, weekends Free).\n");
+                impl.setRateStrategy(new Alternating2()); // update Alternating2 similarly
+                System.out.println("Set to Omegatown (Alternating2: weekdays Linear1, weekends Free).\n");
                 break;
             default:
                 System.out.println("Invalid selection.\n");
