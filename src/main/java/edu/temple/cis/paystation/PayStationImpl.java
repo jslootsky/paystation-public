@@ -20,15 +20,23 @@ import java.util.*;
  * implied. You may study, use, modify, and distribute it for non-commercial
  * purposes. For any commercial use, see http://www.baerbak.com/
  */
-public class PayStationImpl implements PayStation, RateStrategy {
+public class PayStationImpl implements PayStation{
 
     private int insertedSoFar, timeBought, totalMoney;
     private Map<Integer, Integer> coinMap;
+    private RateStrategy rateStrategy;
 
     // Constructor initializes instance variables
     public PayStationImpl(){
         insertedSoFar = timeBought = totalMoney = 0;
         coinMap = new HashMap<>();
+        rateStrategy = new Linear1();
+    }
+
+    public void setRateStragey(RateStrategy rs){
+        if(rs == null) throw new IllegalArgumentException("RateStrategy cannot be null");
+        this.rateStrategy = rs;
+        this.timeBought = rateStrategy.calculateTime(insertedSoFar);
     }
     
     @Override
@@ -98,8 +106,4 @@ public class PayStationImpl implements PayStation, RateStrategy {
         return coinMap;
     }
 
-    @Override
-    public int calculateTime(int cents){
-        return cents;
-    }
 }
